@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生日快乐</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>爱的扩散 - 张健芸</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
         }
         
         body {
@@ -18,298 +16,646 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            background: linear-gradient(to bottom, #0a0a2a, #1a0a2a, #2a0a1a);
+            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
             overflow: hidden;
-            padding: 20px;
+            color: #fff;
         }
         
-        .container {
-            text-align: center;
-            max-width: 800px;
-            width: 100%;
-            padding: 30px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        #container {
             position: relative;
-            z-index: 1;
-            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
-        .container:before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 30px 30px;
-            z-index: -1;
-            animation: sparkle 10s linear infinite;
-        }
-        
-        .main-title {
-            font-size: 5.5rem;
-            font-weight: 800;
-            color: #ff6b6b;
-            margin-bottom: 20px;
-            text-shadow: 3px 3px 0 #ffd166;
-            letter-spacing: 5px;
-            position: relative;
-            display: inline-block;
-            animation: pulse 2s infinite;
-        }
-        
-        .main-title:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 10%;
-            width: 80%;
-            height: 5px;
-            background: linear-gradient(90deg, transparent, #ff9a9e, transparent);
-            border-radius: 5px;
-        }
-        
-        .subtitle {
-            font-size: 1.8rem;
-            color: #555;
-            margin-bottom: 40px;
-            font-weight: 300;
-        }
-        
-        .cake-container {
-            margin: 30px 0;
-            position: relative;
-            height: 200px;
-        }
-        
-        .cake {
-            position: relative;
-            width: 200px;
-            height: 120px;
-            margin: 0 auto;
-            background: linear-gradient(to bottom, #f8c291, #e55039);
-            border-radius: 10px 10px 0 0;
-        }
-        
-        .cake:before {
-            content: '';
-            position: absolute;
-            top: -30px;
-            left: 0;
-            width: 200px;
-            height: 30px;
-            background: linear-gradient(to bottom, #ff9ff3, #f368e0);
-            border-radius: 10px 10px 0 0;
-        }
-        
-        .cake:after {
-            content: '';
-            position: absolute;
-            top: -60px;
-            left: 50px;
-            width: 100px;
-            height: 30px;
-            background: linear-gradient(to bottom, #ff9ff3, #f368e0);
-            border-radius: 10px 10px 0 0;
-        }
-        
-        .candle {
-            position: absolute;
-            top: -80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 10px;
-            height: 30px;
-            background: #ff9f43;
-            border-radius: 5px;
-        }
-        
-        .flame {
-            position: absolute;
-            top: -110px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 40px;
-            background: #ff9f43;
-            border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 20px #ff9f43;
-            animation: flicker 0.5s infinite alternate;
-        }
-        
-        .decoration {
+        canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            z-index: 1;
         }
         
-        .decoration i {
+        #name {
             position: absolute;
-            color: #ff6b6b;
-            font-size: 1.5rem;
-            opacity: 0.8;
-            animation: float 5s infinite linear;
-        }
-        
-        .message {
-            font-size: 1.3rem;
-            color: #666;
-            line-height: 1.6;
-            margin-top: 30px;
+            z-index: 3;
+            font-size: 5.5rem;
+            font-weight: bold;
+            opacity: 0;
+            background: linear-gradient(45deg, #ff4081, #ff79b0, #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255, 64, 129, 0.7);
+            animation: nameAppear 2s forwards;
+            animation-delay: 3.5s;
+            text-align: center;
+            line-height: 1.2;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 15px;
-            border-left: 5px solid #ff9a9e;
+            border-radius: 20px;
+            background-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 40px rgba(255, 64, 129, 0.5);
         }
         
-        .footer {
-            margin-top: 40px;
-            color: #777;
-            font-size: 1rem;
+        @keyframes nameAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(-10deg);
+                filter: blur(10px);
+            }
+            70% {
+                opacity: 1;
+                transform: scale(1.05) rotate(2deg);
+                filter: blur(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+                filter: blur(0);
+            }
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        #instructions {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #ffa8d5;
+            font-size: 1.4rem;
+            z-index: 3;
+            opacity: 0.9;
+            text-shadow: 0 0 10px rgba(255, 64, 129, 0.8);
+            font-weight: 300;
+            letter-spacing: 1px;
         }
         
-        @keyframes flicker {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(0.9); }
+        #subtitle {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #ffa8d5;
+            font-size: 2rem;
+            z-index: 3;
+            opacity: 0;
+            animation: subtitleAppear 1.5s forwards;
+            animation-delay: 5s;
+            text-shadow: 0 0 15px rgba(255, 64, 129, 0.8);
+            font-weight: 300;
+            letter-spacing: 2px;
         }
         
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        @keyframes subtitleAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
         }
         
-        @keyframes sparkle {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        #heartCount {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #ff79b0;
+            font-size: 1.2rem;
+            z-index: 3;
+            opacity: 0.7;
+            font-weight: 300;
         }
         
-        /* 响应式设计 */
+        /* 响应式调整 */
         @media (max-width: 768px) {
-            .main-title {
-                font-size: 3.5rem;
+            #name {
+                font-size: 4rem;
+                padding: 15px;
             }
             
-            .subtitle {
-                font-size: 1.3rem;
+            #instructions {
+                font-size: 1.1rem;
+                padding: 0 10px;
             }
             
-            .cake-container {
-                height: 150px;
+            #subtitle {
+                font-size: 1.6rem;
+                top: 30px;
             }
             
-            .cake {
-                width: 150px;
-                height: 90px;
-            }
-            
-            .cake:before {
-                width: 150px;
-            }
-            
-            .cake:after {
-                width: 75px;
-                left: 37.5px;
+            #heartCount {
+                font-size: 1rem;
             }
         }
         
         @media (max-width: 480px) {
-            .main-title {
-                font-size: 2.5rem;
+            #name {
+                font-size: 3rem;
+                padding: 10px;
             }
             
-            .container {
-                padding: 20px;
+            #instructions {
+                font-size: 0.9rem;
+            }
+            
+            #subtitle {
+                font-size: 1.2rem;
+                top: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="main-title">生日快乐</h1>
-        <p class="subtitle">愿你的每一天都充满阳光和欢笑</p>
-        
-        <div class="cake-container">
-            <div class="cake">
-                <div class="candle"></div>
-                <div class="flame"></div>
-            </div>
-            
-            <div class="decoration" id="decoration">
-                <!-- 装饰元素将通过JavaScript动态添加 -->
-            </div>
-        </div>
-        
-        <div class="message">
-            <p>在这个特别的日子里，送上我最真挚的祝福。愿你生活如蛋糕般甜蜜，未来如烛光般明亮，梦想如气球般高飞。</p>
-            <p style="margin-top: 10px;">愿岁月温柔待你，愿你永远保持那颗纯真的心，生日快乐！</p>
-        </div>
-        
-        <div class="footer">
-            <p>特别为你制作 · 祝你有美好的一天</p>
-        </div>
+    <div id="container">
+        <canvas id="heartCanvas"></canvas>
+        <canvas id="bgCanvas"></canvas>
+        <div id="name">张健芸小姐姐</div>
+        <div id="name">漂亮的女王大人</div>
+        <div id="subtitle">爱心为你绽放</div>
+        <div id="instructions">♥ 爱心正在快速扩散中 ♥</div>
+        <div id="heartCount">爱心数量: <span id="count">0</span></div>
     </div>
 
     <script>
-        // 添加动态装饰元素
-        const decoration = document.getElementById('decoration');
-        const icons = ['fa-heart', 'fa-star', 'fa-birthday-cake', 'fa-gift', 'fa-music', 'fa-balloon'];
-        const colors = ['#ff6b6b', '#ff9f43', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9ff3'];
+        // 获取Canvas元素和上下文
+        const heartCanvas = document.getElementById('heartCanvas');
+        const bgCanvas = document.getElementById('bgCanvas');
+        const heartCtx = heartCanvas.getContext('2d');
+        const bgCtx = bgCanvas.getContext('2d');
         
-        for (let i = 0; i < 15; i++) {
-            const icon = document.createElement('i');
-            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            
-            icon.className = `fas ${randomIcon}`;
-            icon.style.left = `${Math.random() * 100}%`;
-            icon.style.color = randomColor;
-            icon.style.animationDelay = `${Math.random() * 5}s`;
-            icon.style.fontSize = `${Math.random() * 1 + 1}rem`;
-            
-            decoration.appendChild(icon);
+        // 设置Canvas尺寸为窗口大小
+        function resizeCanvas() {
+            heartCanvas.width = bgCanvas.width = window.innerWidth;
+            heartCanvas.height = bgCanvas.height = window.innerHeight;
         }
         
-        // 添加点击祝福效果
-        document.addEventListener('click', function(e) {
-            const x = e.clientX;
-            const y = e.clientY;
-            
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.style.position = 'fixed';
-            heart.style.left = `${x - 10}px`;
-            heart.style.top = `${y - 10}px`;
-            heart.style.fontSize = '1.5rem';
-            heart.style.pointerEvents = 'none';
-            heart.style.zIndex = '9999';
-            heart.style.animation = 'float 2s forwards';
-            
-            document.body.appendChild(heart);
-            
-            // 移除元素
-            setTimeout(() => {
-                document.body.removeChild(heart);
-            }, 2000);
-        });
+        // 初始调整Canvas大小
+        resizeCanvas();
         
-        // 蜡烛闪烁效果增强
-        const flame = document.querySelector('.flame');
-        setInterval(() => {
-            flame.style.height = `${30 + Math.random() * 20}px`;
-            flame.style.width = `${15 + Math.random() * 10}px`;
-        }, 300);
+        // 窗口大小变化时重新调整Canvas
+        window.addEventListener('resize', resizeCanvas);
+        
+        // 小爱心数组，存储所有爱心对象
+        let smallHearts = [];
+        
+        // 背景星星数组
+        let stars = [];
+        
+        // 爱心计数
+        let heartCount = 0;
+        const countElement = document.getElementById('count');
+        
+        // 小爱心类
+        class SmallHeart {
+            constructor(x, y, size, color, angle, distance) {
+                this.originalX = x;
+                this.originalY = y;
+                this.x = x;
+                this.y = y;
+                this.size = size;
+                this.color = color;
+                this.angle = angle; // 相对于中心的角度
+                this.distance = distance; // 距离中心的距离
+                this.alpha = 1;
+                this.speed = Math.random() * 1.5 + 1.2; // 增加扩散速度
+                this.pulse = Math.random() * Math.PI * 2; // 脉动相位
+                this.pulseSpeed = Math.random() * 0.08 + 0.03;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.05;
+                this.trail = []; // 轨迹点数组
+                this.trailLength = Math.floor(Math.random() * 5) + 3; // 轨迹长度
+                
+                heartCount++;
+            }
+            
+            // 更新爱心状态
+            update() {
+                // 沿着角度方向向外扩散
+                this.distance += this.speed;
+                
+                // 根据新的距离计算位置
+                const centerX = heartCanvas.width / 2;
+                const centerY = heartCanvas.height / 2;
+                this.x = centerX + Math.cos(this.angle) * this.distance;
+                this.y = centerY + Math.sin(this.angle) * this.distance;
+                
+                // 旋转
+                this.rotation += this.rotationSpeed;
+                
+                // 透明度逐渐降低
+                this.alpha -= 0.008; // 增加透明度降低速度，缩短扩散时间
+                
+                // 爱心脉动效果
+                this.pulse += this.pulseSpeed;
+                
+                // 添加轨迹点
+                this.trail.push({x: this.x, y: this.y, alpha: this.alpha * 0.7});
+                if (this.trail.length > this.trailLength) {
+                    this.trail.shift();
+                }
+                
+                // 如果爱心完全透明，标记为可移除
+                if (this.alpha <= 0) {
+                    heartCount--;
+                    return false;
+                }
+                return true;
+            }
+            
+            // 绘制小爱心
+            draw() {
+                heartCtx.save();
+                
+                // 绘制轨迹
+                for (let i = 0; i < this.trail.length; i++) {
+                    const point = this.trail[i];
+                    const trailAlpha = point.alpha * (i / this.trail.length);
+                    
+                    heartCtx.globalAlpha = trailAlpha;
+                    heartCtx.fillStyle = this.color;
+                    
+                    // 绘制轨迹点（小圆点）
+                    heartCtx.beginPath();
+                    heartCtx.arc(point.x, point.y, this.size * 0.5, 0, Math.PI * 2);
+                    heartCtx.fill();
+                }
+                
+                // 绘制爱心本体
+                heartCtx.globalAlpha = this.alpha;
+                heartCtx.fillStyle = this.color;
+                
+                // 计算脉动大小
+                const pulseSize = this.size * (1 + 0.2 * Math.sin(this.pulse));
+                
+                // 绘制小爱心形状
+                this.drawTinyHeart(this.x, this.y, pulseSize);
+                
+                heartCtx.restore();
+            }
+            
+            // 绘制小爱心形状的函数
+            drawTinyHeart(x, y, size) {
+                heartCtx.save();
+                heartCtx.translate(x, y);
+                heartCtx.rotate(this.rotation);
+                
+                heartCtx.beginPath();
+                
+                // 爱心曲线
+                const topCurveHeight = size * 0.3;
+                
+                // 从爱心顶部开始
+                heartCtx.moveTo(0, size / 4);
+                
+                // 左上方曲线
+                heartCtx.bezierCurveTo(
+                    0, -size / 2,
+                    -size, -size / 2,
+                    -size, size / 4
+                );
+                
+                // 左下方曲线
+                heartCtx.bezierCurveTo(
+                    -size, size / 1.5,
+                    0, size * 1.2,
+                    0, size * 1.2
+                );
+                
+                // 右下方曲线
+                heartCtx.bezierCurveTo(
+                    0, size * 1.2,
+                    size, size / 1.5,
+                    size, size / 4
+                );
+                
+                // 右上方曲线
+                heartCtx.bezierCurveTo(
+                    size, -size / 2,
+                    0, -size / 2,
+                    0, size / 4
+                );
+                
+                heartCtx.closePath();
+                heartCtx.fill();
+                
+                // 添加高光效果
+                heartCtx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                heartCtx.beginPath();
+                heartCtx.ellipse(-size * 0.3, -size * 0.3, size * 0.2, size * 0.15, 0, 0, Math.PI * 2);
+                heartCtx.fill();
+                
+                heartCtx.restore();
+            }
+        }
+        
+        // 星星类
+        class Star {
+            constructor() {
+                this.x = Math.random() * bgCanvas.width;
+                this.y = Math.random() * bgCanvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.brightness = Math.random() * 0.5 + 0.5;
+                this.twinkleSpeed = Math.random() * 0.05 + 0.02;
+                this.twinkleOffset = Math.random() * Math.PI * 2;
+            }
+            
+            update() {
+                // 星星闪烁效果
+                this.twinkleOffset += this.twinkleSpeed;
+                this.brightness = 0.5 + 0.5 * Math.sin(this.twinkleOffset);
+            }
+            
+            draw() {
+                bgCtx.fillStyle = `rgba(255, 255, 255, ${this.brightness * 0.8})`;
+                bgCtx.beginPath();
+                bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                bgCtx.fill();
+                
+                // 添加星光效果
+                if (this.brightness > 0.8) {
+                    bgCtx.fillStyle = `rgba(255, 255, 255, ${(this.brightness - 0.8) * 0.5})`;
+                    bgCtx.beginPath();
+                    bgCtx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
+                    bgCtx.fill();
+                }
+            }
+        }
+        
+        // 生成空心爱心轮廓点
+        function generateHeartOutline() {
+            const outlinePoints = [];
+            const centerX = heartCanvas.width / 2;
+            const centerY = heartCanvas.height / 2;
+            const heartSize = Math.min(heartCanvas.width, heartCanvas.height) * 0.35; // 增大爱心尺寸
+            
+            // 使用参数方程生成爱心轮廓
+            for (let t = 0; t <= 2 * Math.PI; t += 0.02) { // 增加点密度
+                // 爱心参数方程
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
+                
+                // 缩放并平移到中心
+                const scaledX = centerX + x * heartSize / 16;
+                const scaledY = centerY - y * heartSize / 16;
+                
+                // 计算角度和距离
+                const angle = Math.atan2(scaledY - centerY, scaledX - centerX);
+                const distance = Math.sqrt(
+                    Math.pow(scaledX - centerX, 2) + Math.pow(scaledY - centerY, 2)
+                );
+                
+                outlinePoints.push({
+                    x: scaledX,
+                    y: scaledY,
+                    angle: angle,
+                    distance: distance
+                });
+            }
+            
+            return outlinePoints;
+        }
+        
+        // 从轮廓点创建小爱心
+        function createSmallHeartsFromOutline() {
+            const colors = [
+                '#ff4081', '#ff79b0', '#ff5c8d', '#ff2e63', '#ff9ec5', '#ffb6d9'
+            ];
+            
+            // 生成轮廓点
+            const outlinePoints = generateHeartOutline();
+            
+            // 为每个轮廓点创建一个小爱心
+            outlinePoints.forEach(point => {
+                const colorIndex = Math.floor(Math.random() * colors.length);
+                const size = Math.random() * 4 + 3; // 增大爱心大小
+                
+                smallHearts.push(new SmallHeart(
+                    point.x,
+                    point.y,
+                    size,
+                    colors[colorIndex],
+                    point.angle,
+                    point.distance
+                ));
+            });
+            
+            // 增加内部填充的小爱心数量
+            for (let i = 0; i < 200; i++) { // 增加内部爱心数量
+                const centerX = heartCanvas.width / 2;
+                const centerY = heartCanvas.height / 2;
+                const heartSize = Math.min(heartCanvas.width, heartCanvas.height) * 0.35 * 0.8;
+                
+                // 随机角度
+                const t = Math.random() * 2 * Math.PI;
+                
+                // 爱心参数方程
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
+                
+                // 缩放并平移到中心
+                const scaledX = centerX + x * heartSize / 16;
+                const scaledY = centerY - y * heartSize / 16;
+                
+                // 计算角度和距离
+                const angle = Math.atan2(scaledY - centerY, scaledX - centerX);
+                const distance = Math.sqrt(
+                    Math.pow(scaledX - centerX, 2) + Math.pow(scaledY - centerY, 2)
+                );
+                
+                const colorIndex = Math.floor(Math.random() * colors.length);
+                const size = Math.random() * 3 + 2; // 内部爱心也增大
+                
+                smallHearts.push(new SmallHeart(
+                    scaledX,
+                    scaledY,
+                    size,
+                    colors[colorIndex],
+                    angle,
+                    distance
+                ));
+            }
+        }
+        
+        // 创建额外的小爱心（在扩散过程中）
+        function createExtraSmallHearts() {
+            if (smallHearts.length < 1200) { // 增加最大爱心数量
+                const centerX = heartCanvas.width / 2;
+                const centerY = heartCanvas.height / 2;
+                
+                // 随机颜色
+                const colors = ['#ff4081', '#ff79b0', '#ff5c8d', '#ff2e63', '#ff9ec5'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // 随机角度
+                const angle = Math.random() * 2 * Math.PI;
+                
+                // 初始距离（从爱心轮廓开始）
+                const initialDistance = Math.min(heartCanvas.width, heartCanvas.height) * 0.2;
+                
+                // 随机大小
+                const size = Math.random() * 3 + 2.5;
+                
+                smallHearts.push(new SmallHeart(
+                    centerX + Math.cos(angle) * initialDistance,
+                    centerY + Math.sin(angle) * initialDistance,
+                    size,
+                    color,
+                    angle,
+                    initialDistance
+                ));
+            }
+        }
+        
+        // 初始化背景星星
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor((heartCanvas.width * heartCanvas.height) / 3000);
+            
+            for (let i = 0; i < starCount; i++) {
+                stars.push(new Star());
+            }
+        }
+        
+        // 绘制大空心爱心轮廓
+        function drawHeartOutline() {
+            heartCtx.save();
+            heartCtx.strokeStyle = 'rgba(255, 64, 129, 0.15)';
+            heartCtx.lineWidth = 3;
+            heartCtx.beginPath();
+            
+            // 使用参数方程绘制爱心轮廓
+            const centerX = heartCanvas.width / 2;
+            const centerY = heartCanvas.height / 2;
+            const heartSize = Math.min(heartCanvas.width, heartCanvas.height) * 0.35;
+            
+            for (let t = 0; t <= 2 * Math.PI; t += 0.01) {
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
+                
+                const scaledX = centerX + x * heartSize / 16;
+                const scaledY = centerY - y * heartSize / 16;
+                
+                if (t === 0) {
+                    heartCtx.moveTo(scaledX, scaledY);
+                } else {
+                    heartCtx.lineTo(scaledX, scaledY);
+                }
+            }
+            
+            heartCtx.closePath();
+            heartCtx.stroke();
+            
+            // 添加轮廓光晕
+            heartCtx.strokeStyle = 'rgba(255, 64, 129, 0.05)';
+            heartCtx.lineWidth = 10;
+            heartCtx.stroke();
+            
+            heartCtx.restore();
+        }
+        
+        // 更新爱心计数显示
+        function updateHeartCount() {
+            countElement.textContent = heartCount;
+        }
+        
+        // 绘制背景
+        function drawBackground() {
+            // 绘制深色渐变背景
+            const gradient = bgCtx.createRadialGradient(
+                heartCanvas.width / 2, heartCanvas.height / 2, 0,
+                heartCanvas.width / 2, heartCanvas.height / 2, Math.max(heartCanvas.width, heartCanvas.height) / 2
+            );
+            gradient.addColorStop(0, 'rgba(10, 10, 40, 0.8)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 1)');
+            
+            bgCtx.fillStyle = gradient;
+            bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+            
+            // 绘制星星
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+        }
+        
+        // 动画循环
+        function animate() {
+            // 绘制背景
+            drawBackground();
+            
+            // 清空心形画布（使用半透明黑色实现淡出效果）
+            heartCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            heartCtx.fillRect(0, 0, heartCanvas.width, heartCanvas.height);
+            
+            // 绘制大空心爱心轮廓（透明度低，作为参考）
+            drawHeartOutline();
+            
+            // 更新和绘制所有小爱心
+            for (let i = smallHearts.length - 1; i >= 0; i--) {
+                const heart = smallHearts[i];
+                
+                // 更新爱心状态，如果返回false则移除
+                if (!heart.update()) {
+                    smallHearts.splice(i, 1);
+                } else {
+                    heart.draw();
+                }
+            }
+            
+            // 在扩散过程中创建额外的小爱心
+            if (smallHearts.length > 0 && smallHearts.length < 800) {
+                if (Math.random() < 0.5) { // 增加创建频率
+                    createExtraSmallHearts();
+                }
+            }
+            
+            // 更新爱心计数
+            updateHeartCount();
+            
+            // 继续动画循环
+            requestAnimationFrame(animate);
+        }
+        
+        // 初始化动画
+        function init() {
+            // 初始化背景星星
+            initStars();
+            
+            // 生成爱心轮廓点并创建小爱心
+            createSmallHeartsFromOutline();
+            
+            // 开始动画
+            animate();
+            
+            // 3秒后开始创建额外的小爱心（更早开始）
+            setTimeout(() => {
+                const interval = setInterval(() => {
+                    if (smallHearts.length < 900) {
+                        createExtraSmallHearts();
+                    } else {
+                        clearInterval(interval);
+                    }
+                }, 80); // 缩短间隔，增加创建频率
+            }, 1000);
+            
+            // 5秒后隐藏提示文字
+            setTimeout(() => {
+                document.getElementById('instructions').style.opacity = 0;
+                setTimeout(() => {
+                    document.getElementById('instructions').style.display = 'none';
+                }, 1000);
+            }, 5000);
+        }
+        
+        // 启动初始化
+        init();
     </script>
 </body>
 </html>
